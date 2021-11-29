@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using TicketsAPI.Entities;
+using TicketsAPI.IRepository;
+using TicketsAPI.IServices;
+
+namespace TicketsAPI.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly IUserRepository userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+        public async Task<IEnumerable<User>> GetAll(CancellationToken cancelationToken)
+        {
+            var tickets = await userRepository.GetAll(cancelationToken);
+            return tickets;
+        }
+        public async Task<User> GetById(int id, CancellationToken cancelationToken)
+        {
+            var ticketById = await userRepository.GetById(id, cancelationToken);
+            return ticketById;
+        }
+        public async Task AddUser(User user, CancellationToken cancelationToken)
+        {
+            await userRepository.AddUser(user, cancelationToken);
+        }
+        public async Task<bool> DeleteUser(int id, CancellationToken cancelationToken)
+        {
+            return await userRepository.DeleteUser(id, cancelationToken);
+        }
+    }
+}
