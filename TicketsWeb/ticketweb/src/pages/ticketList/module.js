@@ -17,6 +17,9 @@ const actions = {
     const ticketList = await ticketService.getTickets();
     commit("setTicketList", ticketList);
   },
+  async deleteTicket(state, ticketId){
+    await ticketService.deleteTicket(ticketId);
+  }
 };
 
 const mutations = {

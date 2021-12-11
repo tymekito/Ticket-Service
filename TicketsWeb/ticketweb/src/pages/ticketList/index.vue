@@ -1,13 +1,19 @@
 <template>
-  <v-card max-width="1200" height="900" class="mx-auto ticketsContainer">
-    <v-container fluid>
+<div>
+  <v-card max-width="1200" min-height="660" class="mx-auto ticketsContainer">
+    <v-container class="spinnerConteiner" v-if="tickets.length === 0">
+      <v-progress-circular
+        class="ticketListSpinner"
+        :width="5"
+        :size="80"
+        indeterminate
+        color="green"
+      ></v-progress-circular>
+    </v-container>
+    <v-container fluid v-else>
       <v-row dense>
-        <v-col v-for="ticket in tickets" :key="ticket.name" :cols="6">                 
-          <v-card > 
-            <!-- TODO on click open ticket details
-            przekazać w parametrze klinięty bilet
-            dodać możliwość usuwania biletu
-             -->
+        <v-col v-for="ticket in tickets" :key="ticket.id" :cols="6">
+          <v-card @click="onTicketClick(ticket)">
             <v-img
               src="https://picsum.photos/1920/1080?random"
               class="white--text align-end"
@@ -18,53 +24,62 @@
             </v-img>
 
             <v-card-actions>
-                <v-icon>{{calenderIcon}}</v-icon>
-                <span>{{'03/12/2021'}}</span>
+              <v-icon>{{ calenderIcon }}</v-icon>
+              <span>{{ "03/12/2021" }}</span>
               <v-spacer></v-spacer>
-                <v-icon>{{deleteIcon}}</v-icon>
-
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
+    <TicketDetails 
+    ref="TicketDetails"
+    @deleted ="onDeleteTicket"
+    />
   </v-card>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { mdiDelete, mdiCalendarMonth  } from '@mdi/js';
+import { mdiCloseCircleOutline , mdiCalendarMonth } from "@mdi/js";
+import TicketDetails from "./components/ticketDetails/index.vue";
+
 export default {
+  components: {
+    TicketDetails,
+  },
   data: () => ({
     tickets: [],
-    cards: [
-      {
-        title: "Favorite road trips",
-        src: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-        flex: 6,
-      },
-      {
-        title: "Best airlines",
-        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
-        flex: 6,
-      },
-    ],
+    selectedTicket: null,
   }),
-  mounted() {
-    this.getTicketList();
-    this.tickets = JSON.parse(JSON.stringify(this.ticketList));
+  async mounted() {
+    await this.refreshPageData();
   },
   methods: {
-    ...mapActions("ticketList", ["getTicketList"]),
+    ...mapActions("ticketList", ["getTicketList", "deleteTicket"]),
+    async onDeleteTicket(){
+      await this.deleteTicket(this.selectedTicket.id)
+      await this.refreshPageData();
+    },
+    onTicketClick(ticket){
+      this.selectedTicket = ticket;
+      this.$refs.TicketDetails.open(ticket)
+    },
+    async refreshPageData(){
+      await this.getTicketList();
+      this.tickets = this.ticketList;
+    }
+
   },
   computed: {
     ...mapGetters("ticketList", ["ticketList"]),
-    deleteIcon(){
-      return mdiDelete;
-    }, 
-    calenderIcon(){
+    deleteIcon() {
+      return mdiCloseCircleOutline ;
+    },
+    calenderIcon() {
       return mdiCalendarMonth;
-    }
+    },
   },
 };
 </script>
@@ -73,5 +88,13 @@ export default {
 .ticketsContainer {
   margin-top: 15px;
   margin-bottom: 15px;
+}
+.ticketListSpinner {
+  margin-top: 50%;
+}
+.spinnerConteiner {
+  text-align: center;
+  width: 50%;
+  height: 100%;
 }
 </style>

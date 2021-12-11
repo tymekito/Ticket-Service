@@ -38,9 +38,9 @@
   </v-dialog>
 </template>
 <script>
-import { mdiCloseCircleOutline  } from "@mdi/js";
+import { mdiDelete } from "@mdi/js";
 export default {
-  name: "TicketDetails",
+  name: "EventDetails",
   data: () => ({
     dialog: false,
     headerText: null,
@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     calenderIcon() {
-      return mdiCloseCircleOutline ;
+      return mdiDelete;
     },
   },
 };
