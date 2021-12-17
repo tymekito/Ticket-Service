@@ -2,7 +2,7 @@ import EventModel from "../../models/EventModel";
 import client from "../../shared/api";
 
 const service = {
-    async getEvents(){
+    async getMyEvents(){
         try{
             const resource = "/api/event";
             const result = await client.get(resource);
@@ -11,7 +11,7 @@ const service = {
             return {};
         }
     },
-    async deleteEvent(eventId){
+    async deleteMyEvent(eventId){
         const resource = `/api/event/${eventId}`;
         await client.delete(resource);
     }

@@ -77,7 +77,8 @@ export default {
       items: [
         { title: "Home", icon: "mdi-view-dashboard", to: "/" },
         { title: "MyTickets", icon: "mdi-image", to: "/tickets" },
-        { title: "Events", icon: "mdi-help-box", to: "events" },
+        { title: "Events", icon: "mdi-help-box", to: "/events" },
+        { title: "MyEvents", icon: "mdi-help-box", to: "/myEvents" },
       ],
       drawer: false,
     };

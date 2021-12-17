@@ -12,7 +12,7 @@
       >
         <span class="headerText"> {{ headerText }}</span>
         <v-icon class="ml-15" @click="onDialogCancel()">{{
-          calenderIcon
+          icons.mdiCloseCircleOutline
         }}</v-icon>
       </v-card-title>
       <v-card-text>
@@ -38,13 +38,16 @@
   </v-dialog>
 </template>
 <script>
-import { mdiCloseCircleOutline  } from "@mdi/js";
+import { mdiCloseCircleOutline } from "@mdi/js";
 export default {
   name: "TicketDetails",
   data: () => ({
     dialog: false,
     headerText: null,
     ticketText: null,
+    icons: {
+      mdiCloseCircleOutline,
+    }
   }),
   methods: {
     onTicketReturn() {
@@ -61,9 +64,6 @@ export default {
     },
   },
   computed: {
-    calenderIcon() {
-      return mdiCloseCircleOutline ;
-    },
   },
 };
 </script>

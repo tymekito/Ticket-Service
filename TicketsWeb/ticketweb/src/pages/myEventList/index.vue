@@ -1,6 +1,7 @@
 <template>
 <div>
   <v-card max-width="1200" min-height="860" class="mx-auto eventsContainer">
+    <div>Moje wydarzenia</div>
     <v-container class="spinnerConteiner" v-if="events.length === 0">
       <v-progress-circular
         class="eventListSpinner"

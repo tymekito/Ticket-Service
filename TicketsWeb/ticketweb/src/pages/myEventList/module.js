@@ -1,30 +1,30 @@
-import eventService from "./service";
+import myEventService from "./service";
 
 const getDefultState = () => ({
-  eventList: 0,
+  myEventList: 0,
   selectedEvent: null,
 });
 
 const state = getDefultState();
 
 const getters = {
-  eventList: (state) => state.eventList,
+  myEventList: (state) => state.myEventList,
   selectedEvent: (state) => state.selectedEvent,
 };
 
 const actions = {
   async getEventList({ commit }) {
-    const eventList = await eventService.getEvents();
-    commit("setEventList", eventList);
+    const myEventList = await myEventService.getMyEvents();
+    commit("setEventList", myEventList);
   },
   async deleteEvent(state, eventId){
-    await eventService.deleteEvent(eventId);
+    await myEventService.deleteMyEvent(eventId);
   }
 };
 
 const mutations = {
-  setEventList(state, data) {
-    state.eventList = data;
+  setMyEventList(state, data) {
+    state.myEventList = data;
   },
 };
 

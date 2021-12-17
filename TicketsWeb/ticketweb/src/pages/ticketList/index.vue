@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-card max-width="1200" min-height="660" class="mx-auto ticketsContainer">
+  <v-card max-width="1200" min-height="860" class="mx-auto ticketsContainer">
     <v-container class="spinnerConteiner" v-if="tickets.length === 0">
       <v-progress-circular
         class="ticketListSpinner"
