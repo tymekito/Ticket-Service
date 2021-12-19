@@ -35,7 +35,7 @@ namespace TicketsAPI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<ActionResult> CreateEvent([FromBody] Ticket ticket, CancellationToken cancelationToken)
+        public async Task<ActionResult> CreateTicket([FromBody] Ticket ticket, CancellationToken cancelationToken)
         {
             await service.AddTicketWithUserToEvent(ticket, cancelationToken);
             return Ok();

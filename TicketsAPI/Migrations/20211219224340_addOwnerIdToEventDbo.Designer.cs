@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketsAPI.Entities;
 
 namespace TicketsAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class TicketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211219224340_addOwnerIdToEventDbo")]
+    partial class addOwnerIdToEventDbo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

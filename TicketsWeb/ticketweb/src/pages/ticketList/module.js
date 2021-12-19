@@ -19,6 +19,9 @@ const actions = {
   },
   async deleteTicket(state, ticketId){
     await ticketService.deleteTicket(ticketId);
+  },
+  async buyTicketOnEvent(state, ticket){
+    await ticketService.buyTicketOnEvent(ticket)
   }
 };
 

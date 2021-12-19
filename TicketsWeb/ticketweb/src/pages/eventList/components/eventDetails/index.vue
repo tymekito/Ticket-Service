@@ -1,11 +1,11 @@
-<template>
+<template >
   <v-dialog
     v-model="dialog"
     transition="dialog-bottom-transition"
     width="583"
     height="170"
   >
-    <v-card>
+    <v-card v-if="selectedEvent">
       <v-card-title
         class="lighten-2 dialogWindow--header d-flex justify-space-between pt-3 pb-1 pb-6 pr-2"
         dark
@@ -21,15 +21,12 @@
           <div><b>Event Category:</b> {{selectedEvent.Category}}</div>
           <div><b>Event realase date:</b> 01.01.2021</div>
           <div>
-            <b>Number of participants:</b>  {{selectedEvent.tickets.length}} / 10
-          </div>
-          <div>
             <b>Event description:</b>  {{selectedEvent.description}}
           </div>
         </div>
       </v-card-text>
       <v-card-actions class="d-flex justify-content-end dialogWindow--footer">
-        <v-btn class="button-base button-remove" @click="onEventReturn()"
+        <v-btn class="button-base button-remove" @click="onTicketBuy()"
           >Buy Ticket for 60$</v-btn
         >
       </v-card-actions>
@@ -52,8 +49,8 @@ export default {
     },
   }),
   methods: {
-    onEventReturn() {
-      this.$emit("deleted");
+    onTicketBuy() {
+      this.$emit("buyTicket",this.selectedEvent);
       this.dialog = false;
     },
     onDialogCancel() {
@@ -61,7 +58,6 @@ export default {
     },
     open(item) {
       this.selectedEvent = new EventModel(item);
-      console.log(this.selectedEvent)
       this.dialog = true;
     },
   },

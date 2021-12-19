@@ -14,7 +14,12 @@ const service = {
     async deleteTicket(ticketId){
         const resource = `/api/ticket/${ticketId}`;
         await client.delete(resource);
+    },
+    async buyTicketOnEvent(ticket) {
+        const resource = `/api/ticket/`;
+        await client.post(resource, ticket);
     }
+
 }
 
 export default service;

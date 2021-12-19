@@ -19,11 +19,15 @@
       </v-img>
     </div>
     <div class="popularEvents pt-8">Polularne wydarzenia</div>
+    <template v-if="eventList && eventList.length > 0">
       <PaginationEventList ref="PaginationEventList" :events="eventList" />
+    </template>
     <v-divider inset></v-divider>
     <div>
       <div class="popularEvents pt-8">Odkrywaj</div>
+      <template v-if="eventList && eventList.length > 0">
       <PaginationEventList ref="PaginationEventList" :events="eventList" />
+      </template>
     </div>
   </div>
 </template>

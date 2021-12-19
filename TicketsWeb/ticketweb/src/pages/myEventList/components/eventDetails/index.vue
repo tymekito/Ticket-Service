@@ -21,7 +21,7 @@
           <div><b>Event Category:</b> {{selectedEvent.Category}}</div>
           <div><b>Event realase date:</b> 01.01.2021</div>
           <div>
-            <b>Number of participants:</b>  {{selectedEvent.tickets.length}} / 10
+            <b>Number of participants:</b>  {{selectedEvent && selectedEvent.tickets ? selectedEvent.tickets.length : 0}} / 10
           </div>
           <div>
             <b>Event description:</b>  {{selectedEvent.description}}
@@ -30,7 +30,7 @@
       </v-card-text>
       <v-card-actions class="d-flex justify-content-end dialogWindow--footer">
         <v-btn class="button-base button-remove" @click="onEventReturn()"
-          >Buy Ticket for 60$</v-btn
+          >Dismiss event</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -61,7 +61,6 @@ export default {
     },
     open(item) {
       this.selectedEvent = new EventModel(item);
-      console.log(this.selectedEvent)
       this.dialog = true;
     },
   },

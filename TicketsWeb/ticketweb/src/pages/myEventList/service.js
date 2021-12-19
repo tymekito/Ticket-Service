@@ -11,6 +11,10 @@ const service = {
             return {};
         }
     },
+    async addMyEvent(event){
+        const resource = `/api/event/`;
+        await client.post(resource,event);
+    },
     async deleteMyEvent(eventId){
         const resource = `/api/event/${eventId}`;
         await client.delete(resource);
