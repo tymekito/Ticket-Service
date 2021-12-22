@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card max-width="1200" min-height="860" class="mx-auto">
-      <div class="basePageHeaderText">Moje wydarzenia</div>
+      <div class="basePageHeaderText">My Events</div>
       <div class="d-flex">
         <div class="ml-3 mr-auto p-2 d-flex">
           <v-text-field
@@ -15,7 +15,9 @@
           ></v-text-field>
         </div>
         <div class="p-2">
-          <v-btn class="button-base addEventButton" @click="onAddEvent()">Add Event</v-btn>
+          <v-btn class="button-base addEventButton" @click="onAddEvent()"
+            >Add Event</v-btn
+          >
         </div>
       </div>
       <v-container class="spinnerConteiner" v-if="events === null">
@@ -49,7 +51,7 @@
 
               <v-card-actions>
                 <v-icon>{{ icons.mdiCalendarMonth }}</v-icon>
-                <span class="ml-2 mr-3">{{ "03/12/2021" }}</span>
+                <span class="ml-2 mr-3">{{ event.eventDate }}</span>
                 <v-icon>{{ icons.mdiAccount }}</v-icon>
                 <span class="ml-2 mr-2"
                   >{{ event.tickets !== null ? event.tickets.length : 0 }} /
@@ -92,15 +94,13 @@ export default {
     await this.refreshPageData();
   },
   methods: {
-    ...mapActions("myEventList", [
-      "getMyEventList",
-      "deleteMyEvent",
-    ]),
+    ...mapActions("myEventList", ["getMyEventList", "deleteMyEvent"]),
     async onDeleteEvent() {
       await this.deleteMyEvent(this.selectedEvent.id);
       await this.refreshPageData();
     },
     onEventClick(event) {
+      console.log(event)
       this.selectedEvent = event;
       this.$refs.EventDetails.open(event);
     },
@@ -113,16 +113,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("myEventList", ["myEventList", "search"]),
+    ...mapGetters("myEventList", ["myEventList"]),
     filteredIteams() {
       return this.events.filter((s) =>
         s.name.toLowerCase().includes(this.query.toLowerCase())
       );
-    },
-  },
-  watch: {
-    searchValue: function () {
-      this.changePaginationList();
     },
   },
 };
@@ -151,7 +146,7 @@ export default {
 .eventMenagerWrapper {
   width: 100%;
 }
-.noResultText{
+.noResultText {
   color: rgb(202, 65, 65);
 }
 </style>

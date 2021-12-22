@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TicketsAPI.Entities
 {
@@ -9,6 +10,7 @@ namespace TicketsAPI.Entities
         public string Category { get; set; }
         public string Description { get; set; }
         public int OwnerId { get; set; }
+        public DateTime EventDate { get; set; }
         public virtual List<Ticket> Tickets { get; set; }
     }
 }

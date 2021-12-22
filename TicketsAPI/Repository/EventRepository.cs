@@ -16,11 +16,11 @@ namespace TicketsAPI.Repositories
         }
         public async Task<IEnumerable<Event>> GetAll(CancellationToken cancelationToken)
         {
-            var tmp =  await dbContext
+            var result =  await dbContext
                 .Events
                 .Include(t => t.Tickets)
                 .ToListAsync(cancelationToken);
-            return tmp;
+            return result;
                 
         }
         public async Task<Event> GetById(int id, CancellationToken cancelationToken)
@@ -29,6 +29,14 @@ namespace TicketsAPI.Repositories
                 .Events
                 .Include(t => t.Tickets)
                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+        public async Task<IEnumerable<Event>> GetUserEvents(int userId, CancellationToken cancelationToken)
+        {
+            var result = await dbContext
+                .Events
+                .Include(t => t.Tickets)
+                .ToListAsync();
+            return result.FindAll(r => r.OwnerId == userId);
         }
         public async Task AddEvent(Event _event, CancellationToken cancelationToken)
         {

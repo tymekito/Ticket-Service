@@ -6,5 +6,6 @@ export default class EventModel {
       (this.category = data.category);
     this.description = data.description;
     this.tickets = data.tickets.map((ticket) => new TicketModel(ticket));
+    this.eventDate = new Date(data.eventDate).toLocaleString();
   }
 }

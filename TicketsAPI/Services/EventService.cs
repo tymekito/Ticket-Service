@@ -24,6 +24,11 @@ namespace TicketsAPI.Services
             var eventById = await eventRepository.GetById(id, cancelationToken);
             return eventById;
         }
+        public async Task<IEnumerable<Event>> GetUserEvents(int userId, CancellationToken cancelationToken)
+        {
+            var eventById = await eventRepository.GetUserEvents(userId, cancelationToken);
+            return eventById;
+        }
         public async Task AddEvent(Event _event, CancellationToken cancelationToken)
         {
             await eventRepository.AddEvent(_event, cancelationToken);

@@ -19,7 +19,7 @@
       <v-form ref="form" v-else v-model="valid" lazy-validation>
         <v-text-field
           v-model="name"
-          :counter="10"
+          :counter="50"
           :rules="nameRules"
           label="Name"
           required
@@ -27,6 +27,7 @@
 
         <v-text-field
           v-model="description"
+          :counter="500"
           :rules="descriptionRules"
           label="Description"
         ></v-text-field>
@@ -38,26 +39,40 @@
           label="Category"
           required
         ></v-select>
-
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="addEvent"
-        >
-          Create
-        </v-btn>
-        <v-btn color="warning" class="mr-4" @click="resetValidation">
-          Reset Form
-        </v-btn>
-        <v-btn color="error" @click="reset"> Cancel </v-btn>
+        <v-text-field
+          v-model="date"
+          label="The day of the event"
+          readonly
+          center
+          @click="openDatePicker"
+        ></v-text-field>
+        <v-row v-if="showDatePicker"  justify="center">
+        <v-date-picker v-model="date" no-title scrollable>
+          <v-btn text color="primary" @click="closeDataPicker"> Cancel </v-btn>
+          <v-btn text color="primary" @click="selectDate"> OK </v-btn>
+        </v-date-picker>
+        </v-row>
+        <v-row v-else>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="addEvent"
+          >
+            Create
+          </v-btn>
+          <v-btn color="warning" class="mr-4" @click="resetValidation">
+            Reset Form
+          </v-btn>
+          <v-btn color="error" @click="reset"> Cancel </v-btn>
+        </v-row>
       </v-form>
     </v-card>
   </v-dialog>
 </template>
 <script>
 import EventCategories from "../../../../shared/constants";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import AddEventModel from "../../../../models/AddEventModel";
 export default {
   name: "AddEventDialog",
@@ -66,6 +81,9 @@ export default {
     valid: true,
     name: "",
     dialog: false,
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
     nameRules: [
       (v) => !!v || "Name is required",
       (v) => (v && v.length <= 50) || "Name must be less than 50 characters",
@@ -77,6 +95,7 @@ export default {
     selectedCategory: null,
     categories: null,
     checkbox: false,
+    showDatePicker: false,
   }),
 
   methods: {
@@ -88,16 +107,28 @@ export default {
           this.name,
           this.description,
           this.selectedCategory,
-          3
+          this.userDetails.UserId,
+          this.date
         );
         await this.addMyEvent(newEvent).then(
-        this.$refs.form.reset(),
-        this.$emit("added"),
-        this.dialog = false,
+          this.$refs.form.reset(),
+          this.$emit("added"),
+          (this.dialog = false)
         );
       }
     },
-
+    closeDataPicker(){
+      this.date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
+      this.showDatePicker = false
+    },
+    selectDate(){
+      this.showDatePicker = false
+    },
+    openDatePicker() {
+      this.showDatePicker = true;
+    },
     reset() {
       this.$refs.form.reset();
       this.dialog = false;
@@ -113,6 +144,9 @@ export default {
       this.categories = EventCategories;
       this.dialog = true;
     },
+  },
+  computed: {
+    ...mapGetters("login", ["userDetails"]),
   },
 };
 </script>

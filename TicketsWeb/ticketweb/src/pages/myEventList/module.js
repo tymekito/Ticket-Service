@@ -3,7 +3,6 @@ import myEventService from "./service";
 const getDefultState = () => ({
   myEventList: 0,
   selectedEvent: null,
-  search: '',
 });
 
 const state = getDefultState();
@@ -11,7 +10,6 @@ const state = getDefultState();
 const getters = {
   myEventList: (state) => state.myEventList,
   selectedEvent: (state) => state.selectedEvent,
-  search: (state) => state.search,
 };
 
 const actions = {
@@ -31,9 +29,6 @@ const mutations = {
   setMyEventList(state, data) {
     state.myEventList = data;
   },
-  setSearch(state, search) {
-    state.search = search;
-  }
 };
 
 const module = {

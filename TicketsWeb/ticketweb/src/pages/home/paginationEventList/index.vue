@@ -26,13 +26,18 @@
       v-model="pageNumber"
       :length="paginationLimit"
     ></v-pagination>
+    <EventDetails ref="EventDetails" />
   </v-container>
 </template>
 
 <script>
 import { mdiCalendarMonth } from "@mdi/js";
+import EventDetails from "../../eventList/components/eventDetails/index.vue";
 export default {
   name: "PaginationEventList",
+  components: {
+    EventDetails,
+  },
   data: () => ({
     pageNumber: 1,
     paginationNumber: 4,
@@ -50,11 +55,11 @@ export default {
   },
   methods: {
     refreshPageData() {
-      if (this.events !== 0) {
+      if (this.events && this.events.length !== 0) {
         this.paginationLimit = this.events.length / 4;
-        if (this.paginationLimit > this.paginationLimit.toPrecision(1)) {
+        if ( this.events.length % 4 >0) {
           this.paginationLimit = this.paginationLimit.toPrecision(1);
-          this.paginationLimit++;
+          this.paginationLimit ++;
         }
         this.paginationEventList = this.events.slice(0, this.paginationNumber);
       }
@@ -64,8 +69,12 @@ export default {
       const max = this.paginationNumber * this.pageNumber;
       this.paginationEventList = this.events.slice(min, max);
     },
+    onEventClick(event) {
+      this.selectedEvent = event;
+      this.$refs.EventDetails.open(event);
+    },
   },
-    watch: {
+  watch: {
     pageNumber: function () {
       this.changePaginationList();
     },

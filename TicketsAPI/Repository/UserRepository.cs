@@ -23,12 +23,19 @@ namespace TicketsAPI.Repository
             return tmp;
 
         }
-        public async Task<User> GetById(int id, CancellationToken cancelationToken)
+        public async Task<User> GetById(int id)
         {
             return await dbContext
                 .Users
                 .Include(t => t.Tickets)
                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+        public async Task<User> GetByLogin(string login)
+        {
+            return await dbContext
+                .Users
+                .Include(t => t.Tickets)
+                .FirstOrDefaultAsync(e => e.Login == login);
         }
         public async Task AddUser(User user, CancellationToken cancelationToken)
         {

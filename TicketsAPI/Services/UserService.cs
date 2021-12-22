@@ -23,7 +23,7 @@ namespace TicketsAPI.Services
         }
         public async Task<User> GetById(int id, CancellationToken cancelationToken)
         {
-            var ticketById = await userRepository.GetById(id, cancelationToken);
+            var ticketById = await userRepository.GetById(id);
             return ticketById;
         }
         public async Task AddUser(User user, CancellationToken cancelationToken)

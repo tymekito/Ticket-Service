@@ -77,6 +77,7 @@ namespace TicketsAPI
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthService, AuthService>();
         }
 
     }

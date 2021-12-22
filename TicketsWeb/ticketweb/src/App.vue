@@ -11,7 +11,12 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
+        <v-list-item
+          v-for="item in pagesList"
+          :key="item.title"
+          :to="item.to"
+          link
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -22,12 +27,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      app
-      absolute
-      color="#43a047"
-      dark
-    >
+    <v-app-bar app absolute color="#43a047" dark>
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
@@ -40,18 +40,6 @@
       <!-- <v-app-bar-title>Title</v-app-bar-title> -->
 
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-sheet
       id="scrolling-techniques-5"
@@ -67,20 +55,56 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "app",
   componetns: {},
-  data() {
-    return {
-      items: [
-        { title: "Home", icon: "mdi-view-dashboard", to: "/" },
-        { title: "MyTickets", icon: "mdi-image", to: "/tickets" },
-        { title: "Events", icon: "mdi-help-box", to: "/events" },
-        { title: "MyEvents", icon: "mdi-help-box", to: "/myEvents" },
-      ],
-      drawer: false,
-    };
+  data: () => ({
+    loggedItems: [
+      { title: "Home", icon: "mdi-view-dashboard", to: "/" },
+      {
+        title: "MyTickets",
+        icon: "mdi-image",
+        to: "/tickets",
+      },
+      {
+        title: "Events",
+        icon: "mdi-help-box",
+        to: "/events",
+      },
+      {
+        title: "MyEvents",
+        icon: "mdi-help-box",
+        to: "/myEvents",
+      },
+      {
+        title: "Logout",
+        icon: "mdi-help-box",
+        to: "/logout",
+      },
+    ],
+    unLoggedItems: [
+      { title: "Home", icon: "mdi-view-dashboard", to: "/" },
+      { title: "Login", icon: "mdi-help-box", to: "/login" },
+    ],
+    pagesList: [],
+    drawer: false,
+  }),
+  mounted() {
+    this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
   },
+  methods: {
+    changePageList() {
+      this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
+    },
+  },
+  computed: {
+    ...mapGetters("login", ["isLoggedIn"]),
+  },
+    watch: {
+    isLoggedIn: function () {
+      this.changePageList();
+    },}
 };
 </script>
 
@@ -88,7 +112,6 @@ export default {
 .sticky {
   position: fixed;
   top: 0;
-  width: 100%
-
+  width: 100%;
 }
 </style>

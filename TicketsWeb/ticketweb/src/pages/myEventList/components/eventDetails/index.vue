@@ -19,7 +19,7 @@
         <div class="dialogWindow--content pt-3">
           <div><b>Event Name:</b> {{ selectedEvent.name }}</div>
           <div><b>Event Category:</b> {{selectedEvent.Category}}</div>
-          <div><b>Event realase date:</b> 01.01.2021</div>
+          <div><b>Event realase date:</b> {{selectedEvent.eventDate}}</div>
           <div>
             <b>Number of participants:</b>  {{selectedEvent && selectedEvent.tickets ? selectedEvent.tickets.length : 0}} / 10
           </div>
@@ -61,6 +61,7 @@ export default {
     },
     open(item) {
       this.selectedEvent = new EventModel(item);
+      console.log(this.selectedEvent)
       this.dialog = true;
     },
   },

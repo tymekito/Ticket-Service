@@ -18,14 +18,14 @@
       <v-card-text>
         <div class="dialogWindow--content pt-3">
           <div><b>Event Name:</b> {{ selectedEvent.name }}</div>
-          <div><b>Event Category:</b> {{selectedEvent.Category}}</div>
-          <div><b>Event realase date:</b> 01.01.2021</div>
+          <div><b>Event Category:</b> {{selectedEvent.category}}</div>
+          <div><b>Event realase date:</b>{{selectedEvent.eventDate}}</div>
           <div>
             <b>Event description:</b>  {{selectedEvent.description}}
           </div>
         </div>
       </v-card-text>
-      <v-card-actions class="d-flex justify-content-end dialogWindow--footer">
+      <v-card-actions v-if="isLoggedIn" class="d-flex justify-content-end dialogWindow--footer">
         <v-btn class="button-base button-remove" @click="onTicketBuy()"
           >Buy Ticket for 60$</v-btn
         >
@@ -35,6 +35,8 @@
 </template>
 <script>
 import { mdiDelete,mdiCloseCircleOutline  } from "@mdi/js";
+import { mapGetters } from "vuex";
+
 import EventModel from "../../../../models/EventModel";
 export default {
   name: "EventDetails",
@@ -61,6 +63,9 @@ export default {
       this.dialog = true;
     },
   },
+    computed: {
+    ...mapGetters("login", ["isLoggedIn"]),
+    },
 };
 </script>
 
