@@ -39,10 +39,10 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PayForEvent([FromForm] Payment model)
+        public async Task<ActionResult> AddTicketToEvent(Ticket model, CancellationToken cancelationToken)
         {
-            var responce = await eventService.PayForEvent(model.UserId, model.Amount);
-            return Ok(responce);
+            await service.AddTicketWithUserToEvent(model, cancelationToken);
+            return Ok();
         }
         [HttpDelete("{ticketId}")]
         public async Task<ActionResult> Delete([FromRoute] int ticketId, CancellationToken cancelationToken)

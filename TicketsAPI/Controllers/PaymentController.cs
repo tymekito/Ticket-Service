@@ -9,16 +9,17 @@ namespace TicketsAPI.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IUserService service;
-        public PaymentController(IUserService service)
+        private readonly IEventService service;
+        public PaymentController(IEventService service)
         {
             this.service = service;
         }
+
         [HttpPost]
-        public async Task<ActionResult> AddMoneyToUserWallet([FromForm] Payment model)
+        public async Task<ActionResult> PayForEvent([FromForm] Payment model)
         {
-            await service.AddMoneyToUser(model.UserId, model.Amount);
-            return Ok();
+            var responce = await service.PayForEvent(model.UserId, model.Amount);
+            return Ok(responce);
         }
     }
 }
