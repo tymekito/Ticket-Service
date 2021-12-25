@@ -13,8 +13,8 @@ const getters = {
 };
 
 const actions = {
-  async getTicketList({ commit }) {
-    const ticketList = await ticketService.getTickets();
+  async getTicketList({ commit }, userId) {
+    const ticketList = await ticketService.getTickets(userId);
     commit("setTicketList", ticketList);
   },
   async deleteTicket(state, ticketId){
@@ -22,7 +22,17 @@ const actions = {
   },
   async buyTicketOnEvent(state, ticket){
     await ticketService.buyTicketOnEvent(ticket)
-  }
+  },
+  async payForTicket(state, paymentInfo){
+    console.log('paymentInfo');
+    console.log(paymentInfo);
+    const form = new FormData();
+    form.append("userId", paymentInfo.Id);
+    form.append("amount", paymentInfo.amount);
+    const result = await ticketService.payForTicket(form);
+    console.log(result);
+    return result;
+},
 };
 
 const mutations = {

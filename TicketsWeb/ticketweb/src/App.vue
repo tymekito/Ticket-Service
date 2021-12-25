@@ -38,8 +38,11 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <!-- <v-app-bar-title>Title</v-app-bar-title> -->
-
       <v-spacer></v-spacer>
+      <v-btn v-if="isLoggedIn" class ="mr-10" icon text @click="onWalletClick()">
+        <v-icon>{{ icons.mdiWalletOutline }}</v-icon>
+        <span class="ml-2">{{`${userDetails.wallet}$`}}</span> 
+      </v-btn>
     </v-app-bar>
     <v-sheet
       id="scrolling-techniques-5"
@@ -56,6 +59,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mdiWalletOutline } from "@mdi/js";
 export default {
   name: "app",
   componetns: {},
@@ -89,6 +93,9 @@ export default {
     ],
     pagesList: [],
     drawer: false,
+    icons: {
+      mdiWalletOutline
+    }
   }),
   mounted() {
     this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
@@ -97,9 +104,12 @@ export default {
     changePageList() {
       this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
     },
+    onWalletClick(){
+      console.log('wallet')
+    }
   },
   computed: {
-    ...mapGetters("login", ["isLoggedIn"]),
+    ...mapGetters("login", ["isLoggedIn", "userDetails"]),
   },
     watch: {
     isLoggedIn: function () {
@@ -113,5 +123,10 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
+}
+.wallet {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 88%;
 }
 </style>

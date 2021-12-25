@@ -10,6 +10,15 @@ const service = {
       return null;
     }
   },
+  async getUserDetails(userId){
+    try{
+        const resource = `/api/user/${userId}`;
+        const result = await client.get(resource);
+          return result.data;
+    } catch{
+        return {};
+    }
+},
   async registerUser(userInfo) {
     try {
       const resource = "/api/user";

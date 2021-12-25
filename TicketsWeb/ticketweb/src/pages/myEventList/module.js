@@ -13,8 +13,8 @@ const getters = {
 };
 
 const actions = {
-  async getMyEventList({ commit }) {
-    const myEventList = await myEventService.getMyEvents();
+  async getMyEventList({ commit },userId) {
+    const myEventList = await myEventService.getMyEvents(userId);
     commit("setMyEventList", myEventList);
   },
   async addMyEvent(state, myEvent){

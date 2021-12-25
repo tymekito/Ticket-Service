@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-alert :value="alert" type="success" @click="alert = false"
+      >Added event
+    </v-alert>
+    <v-alert :value="alertDelete" type="success" @click="alertDelete = false"
+      >Deleted event
+    </v-alert>
     <v-card max-width="1200" min-height="860" class="mx-auto">
       <div class="basePageHeaderText">My Events</div>
       <div class="d-flex">
@@ -54,9 +60,8 @@
                 <span class="ml-2 mr-3">{{ event.eventDate }}</span>
                 <v-icon>{{ icons.mdiAccount }}</v-icon>
                 <span class="ml-2 mr-2"
-                  >{{ event.tickets !== null ? event.tickets.length : 0 }} /
-                  10</span
-                >
+                  >{{ event.tickets !== null ? event.tickets.length : 0 }}
+                </span>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -64,7 +69,7 @@
         </v-row>
       </v-container>
       <EventDetails ref="EventDetails" @deleted="onDeleteEvent" />
-      <AddEventDialog ref="AddEventDialog" @added="refreshPageData" />
+      <AddEventDialog ref="AddEventDialog" @added="eventAdded" />
     </v-card>
   </div>
 </template>
@@ -89,6 +94,8 @@ export default {
       mdiAccount,
     },
     query: "",
+    alert: false,
+    alertDelete: false,
   }),
   async mounted() {
     await this.refreshPageData();
@@ -96,24 +103,33 @@ export default {
   methods: {
     ...mapActions("myEventList", ["getMyEventList", "deleteMyEvent"]),
     async onDeleteEvent() {
-      await this.deleteMyEvent(this.selectedEvent.id);
-      await this.refreshPageData();
+      await Promise.all([
+        this.deleteMyEvent(this.selectedEvent.id),
+        this.refreshPageData(),
+      ]);
+      this.alertDelete = true;
     },
     onEventClick(event) {
-      console.log(event)
       this.selectedEvent = event;
       this.$refs.EventDetails.open(event);
     },
     async onAddEvent() {
       this.$refs.AddEventDialog.open();
     },
+    async eventAdded() {
+      await this.refreshPageData();
+      this.alert = true;
+    },
     async refreshPageData() {
-      await this.getMyEventList();
+      await this.getMyEventList(this.userDetails.userId);
       this.events = this.myEventList;
+      this.alert = false;
+      this.alertDelete = false;
     },
   },
   computed: {
     ...mapGetters("myEventList", ["myEventList"]),
+    ...mapGetters("login", ["userDetails"]),
     filteredIteams() {
       return this.events.filter((s) =>
         s.name.toLowerCase().includes(this.query.toLowerCase())

@@ -1,4 +1,6 @@
 import loginService from "./service";
+import UserModel from "../../models/UserModel";
+import UserDetailsModel from "../../models/UserDetailsModel";
 
 const getDefultState = () => ({
   userDetails: {},
@@ -14,11 +16,10 @@ const getters = {
 
 const actions = {
   async logInUser({ commit }, userInfo) {
-    console.log(userInfo);
     const form = new FormData();
     form.append("login", userInfo.login);
     form.append("password", userInfo.password);
-    const userDetails = await loginService.logIn(form);
+    const userDetails = new UserModel(await loginService.logIn(form));
     if (userDetails !== null) {
       commit("setUserDetails", userDetails);
       commit("setLoggedIn", true);
@@ -26,6 +27,12 @@ const actions = {
     }
     commit("setLoggedIn", false);
     return false;
+  },
+  async refreshUserData({ commit }, userId) {
+    const result = new UserDetailsModel(
+      await loginService.getUserDetails(userId)
+    );
+    commit("setUserDetails", result);
   },
   async registerUser(state, user) {
     await loginService.registerUser(user);
@@ -38,11 +45,14 @@ const actions = {
 
 const mutations = {
   setUserDetails(state, userDetails) {
+    console.log(userDetails);
     state.userDetails = {
-      userLogin: userDetails.UserLogin,
-      userId: userDetails.UserId,
-      userName: userDetails.UserName,
+      userLogin: userDetails.userLogin,
+      userId: userDetails.userId,
+      userName: userDetails.userName,
+      wallet: userDetails.wallet,
     };
+    console.log("user mutations");
     console.log(userDetails);
   },
   setSignOut(state) {

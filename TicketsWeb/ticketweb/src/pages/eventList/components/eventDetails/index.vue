@@ -27,7 +27,7 @@
       </v-card-text>
       <v-card-actions v-if="isLoggedIn" class="d-flex justify-content-end dialogWindow--footer">
         <v-btn class="button-base button-remove" @click="onTicketBuy()"
-          >Buy Ticket for 60$</v-btn
+          >Buy Ticket for {{selectedEvent.price}} $</v-btn
         >
       </v-card-actions>
     </v-card>

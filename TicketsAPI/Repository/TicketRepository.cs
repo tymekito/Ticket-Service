@@ -41,9 +41,15 @@ namespace TicketsAPI.Repository
             var ticket = await dbContext
                 .Tickets
                 .FirstOrDefaultAsync(e => e.Id == id);
+            var user = await dbContext
+                .Users
+                .FirstOrDefaultAsync(e => e.Id == ticket.UserId);
             if (ticket == null)
                 return false;
-
+            if (user == null)
+                return false;
+            user.Wallet += ticket.Price;
+            dbContext.Users.Update(user);
             dbContext.Tickets.Remove(ticket);
             await dbContext.SaveChangesAsync(cancelationToken);
             return true;

@@ -2,9 +2,9 @@ import EventModel from "../../models/EventModel";
 import client from "../../shared/api";
 
 const service = {
-    async getMyEvents(){
+    async getMyEvents(userId){
         try{
-            const resource = "/api/event";
+            const resource = `/api/event/${userId}`;
             const result = await client.get(resource);
             return result.data.map((item) => new EventModel(item));
         } catch{

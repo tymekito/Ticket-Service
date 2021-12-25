@@ -31,7 +31,11 @@
           :rules="descriptionRules"
           label="Description"
         ></v-text-field>
-
+        <v-text-field
+          v-model="price"
+          type="number"
+          label="Price"
+        ></v-text-field>
         <v-select
           v-model="selectedCategory"
           :items="categories"
@@ -46,11 +50,13 @@
           center
           @click="openDatePicker"
         ></v-text-field>
-        <v-row v-if="showDatePicker"  justify="center">
-        <v-date-picker v-model="date" no-title scrollable>
-          <v-btn text color="primary" @click="closeDataPicker"> Cancel </v-btn>
-          <v-btn text color="primary" @click="selectDate"> OK </v-btn>
-        </v-date-picker>
+        <v-row v-if="showDatePicker" justify="center">
+          <v-date-picker v-model="date" no-title scrollable>
+            <v-btn text color="primary" @click="closeDataPicker">
+              Cancel
+            </v-btn>
+            <v-btn text color="primary" @click="selectDate"> OK </v-btn>
+          </v-date-picker>
         </v-row>
         <v-row v-else>
           <v-btn
@@ -81,6 +87,7 @@ export default {
     valid: true,
     name: "",
     dialog: false,
+    price: 0,
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
@@ -103,12 +110,14 @@ export default {
     async addEvent() {
       if (this.$refs.form.validate()) {
         this.sendForm = true;
+
         const newEvent = new AddEventModel(
           this.name,
-          this.description,
           this.selectedCategory,
-          this.userDetails.UserId,
-          this.date
+          this.description,
+          this.userDetails.userId,
+          this.date,
+          this.price
         );
         await this.addMyEvent(newEvent).then(
           this.$refs.form.reset(),
@@ -117,14 +126,14 @@ export default {
         );
       }
     },
-    closeDataPicker(){
-      this.date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString()
-      .substr(0, 10),
-      this.showDatePicker = false
+    closeDataPicker() {
+      (this.date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10)),
+        (this.showDatePicker = false);
     },
-    selectDate(){
-      this.showDatePicker = false
+    selectDate() {
+      this.showDatePicker = false;
     },
     openDatePicker() {
       this.showDatePicker = true;

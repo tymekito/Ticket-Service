@@ -10,23 +10,17 @@
         class="lighten-2 dialogWindow--header d-flex justify-space-between pt-3 pb-1 pb-6 pr-2"
         dark
       >
-        <span class="headerText"> {{ headerText }}</span>
+        <span class="headerText"> {{}}</span>
         <v-icon class="ml-15" @click="onDialogCancel()">{{
           icons.mdiCloseCircleOutline
         }}</v-icon>
       </v-card-title>
       <v-card-text>
         <div class="dialogWindow--content pt-3">
-          <div><b>Event Name:</b> {{ ticketText }}</div>
-          <div><b>Ticket Category:</b> Rozrywka</div>
-          <div><b>Ticket realase date:</b> 01.01.2021</div>
-          <div>
-            <b>Ticket descripe:</b> Lorem Ipsum is simply dummy text of the
-            printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type
-            specimen book. It has
-          </div>
+          <div><b>Event Name:</b> {{ ticketName }}</div>
+          <div><b>Ticket Category:</b> {{ ticketCategory }}</div>
+          <div><b>Ticket realase date:</b> {{ ticketDate }}</div>
+          <div><b>Price: </b>{{ ticketPrice }} $</div>
         </div>
       </v-card-text>
       <v-card-actions class="d-flex justify-content-end dialogWindow--footer">
@@ -43,11 +37,15 @@ export default {
   name: "TicketDetails",
   data: () => ({
     dialog: false,
-    headerText: null,
+    ticketName: null,
+    ticketCategory: null,
     ticketText: null,
+    ticketPrice: null,
+    ticketDate: null,
+
     icons: {
       mdiCloseCircleOutline,
-    }
+    },
   }),
   methods: {
     onTicketReturn() {
@@ -58,13 +56,15 @@ export default {
       this.dialog = false;
     },
     open(item) {
-      this.headerText = item.name;
-      this.ticketText = item.name;
+      console.log(item);
+      this.ticketName = item.name;
+      this.ticketCategory = item.category;
+      this.ticketPrice = item.price;
+      this.ticketDate = item.expirationDate;
       this.dialog = true;
     },
   },
-  computed: {
-  },
+  computed: {},
 };
 </script>
 

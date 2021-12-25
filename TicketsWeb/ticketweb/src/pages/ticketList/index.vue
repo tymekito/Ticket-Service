@@ -1,5 +1,8 @@
 <template>
   <div>
+    <v-alert :value="alert" type="success" @click="alert = false"
+      >Returned ticket</v-alert
+    >
     <v-card max-width="1200" min-height="860" class="mx-auto ticketsContainer">
       <div class="basePageHeaderText">My Tickets</div>
       <div class="d-flex">
@@ -73,27 +76,35 @@ export default {
     tickets: [],
     selectedTicket: null,
     query: "",
+    alert: false,
   }),
   async mounted() {
     await this.refreshPageData();
   },
   methods: {
     ...mapActions("ticketList", ["getTicketList", "deleteTicket"]),
+    ...mapActions("login", ["refreshUserData"]),
+
     async onDeleteTicket() {
       await this.deleteTicket(this.selectedTicket.id);
+      await this.refreshUserData(this.userDetails.userId);
       await this.refreshPageData();
+      this.alert = true;
     },
     onTicketClick(ticket) {
       this.selectedTicket = ticket;
+      console.log(this.selectedTicket);
       this.$refs.TicketDetails.open(ticket);
     },
     async refreshPageData() {
-      await this.getTicketList();
+      await this.getTicketList(this.userDetails.userId);
       this.tickets = this.ticketList;
+      this.alert = false;
     },
   },
   computed: {
     ...mapGetters("ticketList", ["ticketList"]),
+    ...mapGetters("login", ["userDetails"]),
     deleteIcon() {
       return mdiCloseCircleOutline;
     },

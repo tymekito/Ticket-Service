@@ -1,20 +1,26 @@
 <template>
   <div>
+    <v-alert :value="alert" type="warning" @click="alert = false"
+      >Not enought to buy a ticket</v-alert
+    >
+    <v-alert :value="alertSuccess" type="success" @click="alertSuccess = false"
+      >Buy Ticket Success</v-alert
+    >
     <v-card max-width="1200" min-height="860" class="mx-auto eventsContainer">
       <div class="basePageHeaderText">All Events</div>
-        <div class="d-flex">
-          <div class="ml-3 mr-auto p-2 d-flex">
-            <v-text-field
-              class="ml-1"
-              label="Find Event"
-              clearable
-              dense
-              outlined
-              prepend-inner-icon="search"
-              v-model="query"
-            ></v-text-field>
-          </div>
+      <div class="d-flex">
+        <div class="ml-3 mr-auto p-2 d-flex">
+          <v-text-field
+            class="ml-1"
+            label="Find Event"
+            clearable
+            dense
+            outlined
+            prepend-inner-icon="search"
+            v-model="query"
+          ></v-text-field>
         </div>
+      </div>
       <v-container
         class="spinnerConteiner"
         v-if="events && events.length === 0"
@@ -48,7 +54,7 @@
 
               <v-card-actions>
                 <v-icon>{{ icons.mdiCalendarMonth }}</v-icon>
-                <span class="ml-2 mr-3">{{ event.eventDate}}</span>
+                <span class="ml-2 mr-3">{{ event.eventDate }}</span>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -78,6 +84,8 @@ export default {
       mdiCalendarMonth,
       mdiAccount,
     },
+    alert: false,
+    alertSuccess: false,
     query: "",
   }),
   async mounted() {
@@ -85,16 +93,39 @@ export default {
   },
   methods: {
     ...mapActions("eventList", ["getEventList", "deleteEvent"]),
-    ...mapActions("ticketList", ["buyTicketOnEvent"]),
+    ...mapActions("ticketList", [
+      "buyTicketOnEvent",
+      "payForTicket",
+      "buyTicket",
+    ]),
+    ...mapActions("login", ["refreshUserData"]),
     async onBuyTicketOnEvent(selectedEvent) {
-      const ticket = new AddTicketModel(
-        selectedEvent.name,
-        selectedEvent.category,
-        3,
-        selectedEvent.id
-      );
-      await this.buyTicketOnEvent(ticket);
-      await this.refreshPageData();
+      if (
+        (await this.payForTicket({
+          Id: this.userDetails.userId,
+          amount: selectedEvent.price,
+        })) === false
+      ) {
+        await this.refreshPageData();
+        this.alert = true;
+      } else {
+        const userId = JSON.parse(JSON.stringify(this.userDetails.userId));
+        console.log(selectedEvent);
+        const ticket = new AddTicketModel(
+          selectedEvent.name,
+          selectedEvent.category,
+          userId,
+          selectedEvent.id,
+          selectedEvent.eventDate,
+          selectedEvent.price
+        );
+        await Promise.all([
+          this.refreshUserData(userId),
+          this.buyTicketOnEvent(ticket),
+          this.refreshPageData(),
+        ]);
+        this.alertSuccess = true;
+      }
     },
     onEventClick(event) {
       this.selectedEvent = event;
@@ -103,10 +134,13 @@ export default {
     async refreshPageData() {
       await this.getEventList();
       this.events = this.eventList;
+      this.alert = false;
+      this.alertSuccess = false;
     },
   },
   computed: {
     ...mapGetters("eventList", ["eventList"]),
+    ...mapGetters("login", ["userDetails"]),
     filteredIteams() {
       return this.events.filter((s) =>
         s.name.toLowerCase().includes(this.query.toLowerCase())
