@@ -56,7 +56,6 @@ export default {
       this.dialog = false;
     },
     open(item) {
-      console.log(item);
       this.ticketName = item.name;
       this.ticketCategory = item.category;
       this.ticketPrice = item.price;

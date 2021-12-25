@@ -45,15 +45,12 @@ const actions = {
 
 const mutations = {
   setUserDetails(state, userDetails) {
-    console.log(userDetails);
     state.userDetails = {
       userLogin: userDetails.userLogin,
       userId: userDetails.userId,
       userName: userDetails.userName,
       wallet: userDetails.wallet,
     };
-    console.log("user mutations");
-    console.log(userDetails);
   },
   setSignOut(state) {
     state.userDetails = {};

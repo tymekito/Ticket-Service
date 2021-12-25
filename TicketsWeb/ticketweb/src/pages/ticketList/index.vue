@@ -93,7 +93,6 @@ export default {
     },
     onTicketClick(ticket) {
       this.selectedTicket = ticket;
-      console.log(this.selectedTicket);
       this.$refs.TicketDetails.open(ticket);
     },
     async refreshPageData() {

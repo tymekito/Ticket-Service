@@ -17,22 +17,20 @@ const actions = {
     const ticketList = await ticketService.getTickets(userId);
     commit("setTicketList", ticketList);
   },
-  async deleteTicket(state, ticketId){
+  async deleteTicket(state, ticketId) {
     await ticketService.deleteTicket(ticketId);
   },
-  async buyTicketOnEvent(state, ticket){
-    await ticketService.buyTicketOnEvent(ticket)
+  async buyTicketOnEvent(state, ticket) {
+    await ticketService.buyTicketOnEvent(ticket);
   },
-  async payForTicket(state, paymentInfo){
-    console.log('paymentInfo');
-    console.log(paymentInfo);
+  async payForTicket(state, paymentInfo) {
     const form = new FormData();
     form.append("userId", paymentInfo.Id);
     form.append("amount", paymentInfo.amount);
     const result = await ticketService.payForTicket(form);
-    console.log(result);
+
     return result;
-},
+  },
 };
 
 const mutations = {

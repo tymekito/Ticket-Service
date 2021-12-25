@@ -110,7 +110,6 @@ export default {
         this.alert = true;
       } else {
         const userId = JSON.parse(JSON.stringify(this.userDetails.userId));
-        console.log(selectedEvent);
         const ticket = new AddTicketModel(
           selectedEvent.name,
           selectedEvent.category,
