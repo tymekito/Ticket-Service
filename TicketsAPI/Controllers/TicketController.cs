@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TicketsAPI.Entities;
 using TicketsAPI.IServices;
+using TicketsAPI.Models;
 
 namespace TicketsAPI.Controllers
 {
@@ -14,10 +15,12 @@ namespace TicketsAPI.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService service;
+        private readonly IEventService eventService;
         private readonly IMapper mapper;
-        public TicketController(ITicketService service, IMapper mapper)
+        public TicketController(ITicketService service, IEventService eventService, IMapper mapper)
         {
             this.service = service;
+            this.eventService = eventService;
             this.mapper = mapper;
         }
         [HttpGet]
@@ -27,18 +30,19 @@ namespace TicketsAPI.Controllers
             var result = ticket.ToList().Select(e => mapper.Map<TicketViewModel>(e));
             return Ok(result);
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IReadOnlyCollection<Ticket>>> GetTicketById([FromRoute] int id, CancellationToken cancelationToken)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IReadOnlyCollection<Ticket>>> GetTicketsForUser([FromRoute] int userId, CancellationToken cancelationToken)
         {
-            var ticket = await service.GetById(id, cancelationToken);
-            var result = mapper.Map<TicketViewModel>(ticket);
+            var tickets = await service.GetTicketListByUserId(userId, cancelationToken);
+            var result = tickets.ToList().Select(e => mapper.Map<TicketViewModel>(e));
             return Ok(result);
         }
+
         [HttpPost]
-        public async Task<ActionResult> CreateTicket([FromBody] Ticket ticket, CancellationToken cancelationToken)
+        public async Task<ActionResult> PayForEvent([FromForm] Payment model)
         {
-            await service.AddTicketWithUserToEvent(ticket, cancelationToken);
-            return Ok();
+            var responce = await eventService.PayForEvent(model.UserId, model.Amount);
+            return Ok(responce);
         }
         [HttpDelete("{ticketId}")]
         public async Task<ActionResult> Delete([FromRoute] int ticketId, CancellationToken cancelationToken)

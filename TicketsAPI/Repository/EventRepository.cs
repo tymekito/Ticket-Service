@@ -45,6 +45,18 @@ namespace TicketsAPI.Repositories
                 .AddAsync(_event, cancelationToken);                        
             await dbContext.SaveChangesAsync(cancelationToken);
         }
+        public async Task<bool> PayForEvent(int userId, double amount)
+        {
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user != null && user.Wallet - amount >= 0)
+            {
+                user.Wallet -= amount;
+                dbContext.Update(user);
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public async Task<bool> DeleteEvent(int id, CancellationToken cancelationToken)
         {
             var _event = await dbContext

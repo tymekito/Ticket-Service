@@ -11,6 +11,7 @@ namespace TicketsAPI.IServices
         public Task<Event> GetById(int id, CancellationToken cancelationToken);
         public Task<IEnumerable<Event>> GetUserEvents(int userId, CancellationToken cancelationToken);
         public Task AddEvent(Event _event, CancellationToken cancelationToken);
+        public Task<bool> PayForEvent(int userId, double amount);
         public Task<bool> DeleteEvent(int id, CancellationToken cancelationToken);
     }
 }

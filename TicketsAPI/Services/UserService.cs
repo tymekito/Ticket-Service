@@ -34,5 +34,9 @@ namespace TicketsAPI.Services
         {
             return await userRepository.DeleteUser(id, cancelationToken);
         }
+        public async Task AddMoneyToUser(int userId, double amount)
+        {
+            await userRepository.AddMoneyToUser(userId, amount);
+        }
     }
 }

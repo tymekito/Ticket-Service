@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TicketsAPI.Entities;
@@ -20,11 +21,12 @@ namespace TicketsAPI.Repository
                 .Tickets
                 .ToListAsync(cancelationToken);
         }
-        public async Task<Ticket> GetById(int id, CancellationToken cancelationToken)
+        public async Task<List<Ticket>> GetTicketListByUserId(int userId, CancellationToken cancelationToken)
         {
             return await dbContext
                 .Tickets
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .Where( t => t.UserId == userId)
+                .ToListAsync();
         }
         public async Task AddTicketWithUserToEvent(Ticket ticket, CancellationToken cancelationToken)
         {

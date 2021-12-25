@@ -37,6 +37,15 @@ namespace TicketsAPI.Repository
                 .Include(t => t.Tickets)
                 .FirstOrDefaultAsync(e => e.Login == login);
         }
+        public async Task AddMoneyToUser(int userId, double amount)
+        {
+            var user = await dbContext
+                .Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            user.Wallet += amount;
+            dbContext.Update(user);
+            dbContext.SaveChanges();
+        }
         public async Task AddUser(User user, CancellationToken cancelationToken)
         {
             await dbContext

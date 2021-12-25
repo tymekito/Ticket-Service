@@ -15,7 +15,6 @@ namespace TicketsAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService service;
-        private readonly IMapper mapper;
         public AuthController(IAuthService service)
         {
             this.service = service;
