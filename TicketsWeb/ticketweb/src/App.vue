@@ -39,9 +39,9 @@
 
       <!-- <v-app-bar-title>Title</v-app-bar-title> -->
       <v-spacer></v-spacer>
-      <v-btn v-if="isLoggedIn" class ="mr-10" icon text @click="onWalletClick()">
-        <v-icon>{{ icons.mdiWalletOutline }}</v-icon>
-        <span class="ml-2">{{`${userDetails.wallet}$`}}</span> 
+      <v-btn v-if="isLoggedIn" class="mr-10"  text :to="walletItem.to" link>
+        <v-icon>{{ walletItem.icon }}</v-icon>
+        <span class="ml-2">{{ `${userDetails.wallet}$` }}</span>
       </v-btn>
     </v-app-bar>
     <v-sheet
@@ -91,11 +91,12 @@ export default {
       { title: "Home", icon: "mdi-view-dashboard", to: "/" },
       { title: "Login", icon: "mdi-help-box", to: "/login" },
     ],
+    walletItem: { title: "Wallet", icon: mdiWalletOutline, to: "/wallet" },
     pagesList: [],
     drawer: false,
     icons: {
-      mdiWalletOutline
-    }
+      mdiWalletOutline,
+    },
   }),
   mounted() {
     this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
@@ -104,17 +105,18 @@ export default {
     changePageList() {
       this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
     },
-    onWalletClick(){
-      console.log('wallet')
-    }
+    onWalletClick() {
+      console.log("wallet");
+    },
   },
   computed: {
     ...mapGetters("login", ["isLoggedIn", "userDetails"]),
   },
-    watch: {
+  watch: {
     isLoggedIn: function () {
       this.changePageList();
-    },}
+    },
+  },
 };
 </script>
 

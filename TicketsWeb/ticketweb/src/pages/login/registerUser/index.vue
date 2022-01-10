@@ -54,7 +54,7 @@
         <v-text-field
           v-model="email"
           :counter="20"
-          :rules="nameRules"
+          :rules="emailRules"
           label="E-mail"
           required
         ></v-text-field>
@@ -87,6 +87,10 @@ export default {
     name: "",
     lastName: "",
     email: "",
+          emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'Incorect E-mail',
+      ],
     dialog: false,
     nameRules: [
       (v) => !!v || "Name is required",

@@ -103,7 +103,8 @@ export default {
       if (
         (await this.payForTicket({
           Id: this.userDetails.userId,
-          amount: selectedEvent.price,
+          EventId: this.selectedEvent.id,
+          Amount: selectedEvent.price,
         })) === false
       ) {
         await this.refreshPageData();

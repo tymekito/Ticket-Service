@@ -18,7 +18,7 @@ namespace TicketsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> PayForEvent([FromForm] Payment model)
         {
-            var responce = await service.PayForEvent(model.UserId, model.Amount);
+            var responce = await service.PayForEvent(model.UserId, model.Amount, model.EventId);
             return Ok(responce);
         }
     }

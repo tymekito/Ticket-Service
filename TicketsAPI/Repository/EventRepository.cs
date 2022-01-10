@@ -45,13 +45,17 @@ namespace TicketsAPI.Repositories
                 .AddAsync(_event, cancelationToken);                        
             await dbContext.SaveChangesAsync(cancelationToken);
         }
-        public async Task<bool> PayForEvent(int userId, double amount)
+        public async Task<bool> PayForEvent(int userId, double amount, int eventId)
         {
             var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            if (user != null && user.Wallet - amount >= 0)
+            var _event = await dbContext.Events.FirstOrDefaultAsync(e => e.Id == eventId);
+            var eventOwner = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == _event.OwnerId);
+            if (user != null && _event != null && eventOwner != null && user.Wallet - amount >= 0)
             {
                 user.Wallet -= amount;
                 dbContext.Update(user);
+                eventOwner.Wallet += amount;
+                dbContext.Update(eventOwner);
                 dbContext.SaveChanges();
                 return true;
             }

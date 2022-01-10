@@ -26,7 +26,8 @@ const actions = {
   async payForTicket(state, paymentInfo) {
     const form = new FormData();
     form.append("userId", paymentInfo.Id);
-    form.append("amount", paymentInfo.amount);
+    form.append("amount", paymentInfo.Amount);
+    form.append("eventId", paymentInfo.EventId);
     const result = await ticketService.payForTicket(form);
 
     return result;

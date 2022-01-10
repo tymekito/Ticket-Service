@@ -5,7 +5,7 @@ using TicketsAPI.Models;
 
 namespace TicketsAPI.Controllers
 {
-    [Route("api/walet")]
+    [Route("api/wallet")]
     [ApiController]
     public class WalletController : ControllerBase
     {

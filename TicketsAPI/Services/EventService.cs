@@ -33,10 +33,10 @@ namespace TicketsAPI.Services
         {
             await eventRepository.AddEvent(_event, cancelationToken);
         }
-        public async Task<bool> PayForEvent(int userId,  double amount)
+        public async Task<bool> PayForEvent(int userId,  double amount, int eventId)
         {
-            var eventById = await eventRepository.PayForEvent(userId, amount );
-            return eventById;
+            var actionResult = await eventRepository.PayForEvent(userId, amount, eventId);
+            return actionResult;
         }
         public async Task<bool> DeleteEvent(int id, CancellationToken cancelationToken)
         {
