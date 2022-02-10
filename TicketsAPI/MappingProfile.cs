@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using TicketsAPI.Entities;
-using TicketsAPI.Models;
+using BookApi.Entities;
+using BookApi.Models;
 
-namespace TicketsAPI
+namespace BookApi
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<Event, EventViewModel>();
-            CreateMap<Ticket, TicketViewModel>();
+            CreateMap<Book, BookViewModel>();
             CreateMap<User, UserViewModel>();
             CreateMap<User, ResponceAuth>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))

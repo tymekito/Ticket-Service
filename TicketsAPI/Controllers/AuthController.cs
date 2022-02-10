@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TicketsAPI.Entities;
-using TicketsAPI.IServices;
-using TicketsAPI.Models;
+using BookApi.Entities;
+using BookApi.IServices;
+using BookApi.Models;
 
-namespace TicketsAPI.Controllers
+namespace BookApi.Controllers
 {
     [Route("api/login")]
     [ApiController]

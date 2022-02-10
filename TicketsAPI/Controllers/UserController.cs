@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TicketsAPI.Entities;
-using TicketsAPI.IServices;
-namespace TicketsAPI.Controllers
+using BookApi.Entities;
+using BookApi.IServices;
+namespace BookApi.Controllers
 {
     [Route("api/user")]
     [ApiController]

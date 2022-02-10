@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TicketsAPI.Entities;
+using BookApi.Entities;
 
-namespace TicketsAPI.IRepository
+namespace BookApi.IRepository
 {
     public interface IUserRepository
     {

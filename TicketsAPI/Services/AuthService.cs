@@ -1,11 +1,11 @@
 ﻿
 using AutoMapper;
 using System.Threading.Tasks;
-using TicketsAPI.IRepository;
-using TicketsAPI.IServices;
-using TicketsAPI.Models;
+using BookApi.IRepository;
+using BookApi.IServices;
+using BookApi.Models;
 
-namespace TicketsAPI.Services
+namespace BookApi.Services
 {
     public class AuthService : IAuthService
     {

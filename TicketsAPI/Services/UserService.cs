@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TicketsAPI.Entities;
-using TicketsAPI.IRepository;
-using TicketsAPI.IServices;
+using BookApi.Entities;
+using BookApi.IRepository;
+using BookApi.IServices;
 
-namespace TicketsAPI.Services
+namespace BookApi.Services
 {
     public class UserService : IUserService
     {

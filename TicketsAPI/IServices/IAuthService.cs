@@ -1,8 +1,8 @@
 ﻿
 using System.Threading.Tasks;
-using TicketsAPI.Models;
+using BookApi.Models;
 
-namespace TicketsAPI.IServices
+namespace BookApi.IServices
 {
     public interface IAuthService
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace TicketsAPI
+namespace BookApi
 {
     public class WeatherForecast
     {

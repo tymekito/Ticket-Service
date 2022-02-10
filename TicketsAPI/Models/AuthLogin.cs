@@ -1,4 +1,4 @@
-﻿namespace TicketsAPI.Models
+﻿namespace BookApi.Models
 {
     public class AuthLogin 
     {

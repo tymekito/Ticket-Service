@@ -1,21 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TicketsAPI.Entities
+namespace BookApi.Entities
 {
     public class AppDbContext : DbContext
     {
-        private readonly string connectionString = "Server=localhost\\SQLEXPRESS; Database=TicketsDb; Trusted_Connection=True";
-        public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Event> Events { get; set; }
+        private readonly string connectionString = "Server=localhost\\SQLEXPRESS; Database=LibraryDb; Trusted_Connection=True";
+        public DbSet<Book> Books { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
-            modelbuilder.Entity<Ticket>()
+            modelbuilder.Entity<Book>()
                 .Property(t => t.Name)
-                .IsRequired();
-            modelbuilder.Entity<Event>()
-                .Property(e => e.Name)
                 .IsRequired();
             modelbuilder.Entity<User>()
                 .Property(u => u.Name)

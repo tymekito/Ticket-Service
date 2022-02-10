@@ -1,9 +1,9 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
-using TicketsAPI.Entities;
+using BookApi.Entities;
 
-namespace TicketsAPI
+namespace BookApi
 {
     public class DbContextSeeder
     {
@@ -16,7 +16,7 @@ namespace TicketsAPI
         {
             if(this.dbContext.Database.CanConnect())
             {
-                if(!this.dbContext.Tickets.Any())
+                if(!this.dbContext.Books.Any())
                 {
                     //Seed initial data
                     //var user = GetUser();

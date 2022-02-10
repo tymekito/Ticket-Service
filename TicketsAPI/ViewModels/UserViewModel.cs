@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace TicketsAPI.Entities
+namespace BookApi.Entities
 {
     public class UserViewModel
     {
@@ -10,8 +10,7 @@ namespace TicketsAPI.Entities
         public string Name { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }
-        public double Wallet { get; set; }
-        public virtual List<Ticket> Tickets { get; set; }
+        public virtual List<Book> Books { get; set; }
 
     }
 }

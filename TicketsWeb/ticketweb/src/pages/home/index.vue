@@ -19,27 +19,16 @@
       </v-img>
     </div>
     <div class="popularEvents pt-8">Polularne wydarzenia</div>
-    <template v-if="eventList && eventList.length > 0">
-      <PaginationEventList ref="PaginationEventList" :events="eventList" />
-    </template>
     <v-divider inset></v-divider>
     <div>
       <div class="popularEvents pt-8">Odkrywaj</div>
-      <template v-if="eventList && eventList.length > 0">
-      <PaginationEventList ref="PaginationEventList" :events="eventList" />
-      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
 import { mdiCloseCircleOutline, mdiCalendarMonth, mdiAccount } from "@mdi/js";
-import PaginationEventList from "./paginationEventList/index.vue";
 export default {
-  components: {
-    PaginationEventList,
-  },
   data: () => ({
     events: [],
     selectedEvent: null,
@@ -57,18 +46,10 @@ export default {
     await this.refreshPageData();
   },
   methods: {
-    ...mapActions("eventList", ["getEventList"]),
-    onEventClick(event) {
-      this.selectedEvent = event;
-      //this.$refs.EventDetails.open(event)
-    },
     async refreshPageData() {
-      await this.getEventList();
-      this.events = this.eventList;
     },
   },
   computed: {
-    ...mapGetters("eventList", ["eventList"]),
   },
 };
 </script>

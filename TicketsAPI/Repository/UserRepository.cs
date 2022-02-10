@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TicketsAPI.Entities;
-using TicketsAPI.IRepository;
+using BookApi.Entities;
+using BookApi.IRepository;
 
-namespace TicketsAPI.Repository
+namespace BookApi.Repository
 {
     public class UserRepository : IUserRepository
     {
@@ -18,7 +18,7 @@ namespace TicketsAPI.Repository
         {
             var tmp = await dbContext
                 .Users
-                .Include(t => t.Tickets)
+                .Include(t => t.Books)
                 .ToListAsync(cancelationToken);
             return tmp;
 
@@ -27,14 +27,14 @@ namespace TicketsAPI.Repository
         {
             return await dbContext
                 .Users
-                .Include(t => t.Tickets)
+                .Include(t => t.Books)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
         public async Task<User> GetByLogin(string login)
         {
             return await dbContext
                 .Users
-                .Include(t => t.Tickets)
+                .Include(t => t.Books)
                 .FirstOrDefaultAsync(e => e.Login == login);
         }
         public async Task AddMoneyToUser(int userId, double amount)
@@ -42,7 +42,6 @@ namespace TicketsAPI.Repository
             var user = await dbContext
                 .Users
                 .FirstOrDefaultAsync(u => u.Id == userId);
-            user.Wallet += amount;
             dbContext.Update(user);
             dbContext.SaveChanges();
         }
@@ -57,7 +56,7 @@ namespace TicketsAPI.Repository
         {
             var user = await dbContext
                 .Users
-                .Include(t => t.Tickets)
+                .Include(t => t.Books)
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (user == null)
                 return false;

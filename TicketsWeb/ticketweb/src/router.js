@@ -1,17 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "./store";
-import ticketRoutes from "./pages/ticketList/router";
+import bookRoutes from "./pages/bookList/router";
+import allbookRoutes from "./pages/allbookList/router";
 import homeRoutes from "./pages/home/router";
-import eventsRoutes from "./pages/eventList/router";
-import myEventsRoutes from "./pages/myEventList/router";
 import loginRoutes from "./pages/login/router";
-import walletRoutes from "./pages/wallet/router";
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes: [ticketRoutes, homeRoutes, eventsRoutes, myEventsRoutes, walletRoutes, loginRoutes],
+  routes: [bookRoutes, homeRoutes, allbookRoutes, loginRoutes],
 });
 
 router.beforeEach((to, from, next) => {

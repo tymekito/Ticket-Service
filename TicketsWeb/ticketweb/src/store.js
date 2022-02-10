@@ -1,19 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import ticketList from './pages/ticketList/module';
-import eventList from './pages/eventList/module';
-import myEventList from './pages/myEventList/module';
+import bookList from './pages/bookList/module';
+import allbookList from './pages/allbookList/module';
 import login from './pages/login/module';
-import wallet from './pages/wallet/module';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules:{
-        ticketList,
-        eventList,
-        myEventList,
-        login,
-        wallet
+        bookList,
+        allbookList,
+        login       
     }
 })

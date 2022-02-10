@@ -3,7 +3,7 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6"> BuyTicketApp </v-list-item-title>
+          <v-list-item-title class="text-h6"> BuyBookApp </v-list-item-title>
           <v-list-item-subtitle> Buy and dont cry </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -39,10 +39,6 @@
 
       <!-- <v-app-bar-title>Title</v-app-bar-title> -->
       <v-spacer></v-spacer>
-      <v-btn v-if="isLoggedIn" class="mr-10"  text :to="walletItem.to" link>
-        <v-icon>{{ walletItem.icon }}</v-icon>
-        <span class="ml-2">{{ `${userDetails.wallet}$` }}</span>
-      </v-btn>
     </v-app-bar>
     <v-sheet
       id="scrolling-techniques-5"
@@ -67,19 +63,14 @@ export default {
     loggedItems: [
       { title: "Home", icon: "mdi-view-dashboard", to: "/" },
       {
-        title: "MyTickets",
+        title: "MyBooks",
         icon: "mdi-image",
-        to: "/tickets",
+        to: "/books",
       },
       {
-        title: "Events",
-        icon: "mdi-help-box",
-        to: "/events",
-      },
-      {
-        title: "MyEvents",
-        icon: "mdi-help-box",
-        to: "/myEvents",
+        title: "Books",
+        icon: "mdi-image",
+        to: "/allbooks",
       },
       {
         title: "Logout",
@@ -91,7 +82,6 @@ export default {
       { title: "Home", icon: "mdi-view-dashboard", to: "/" },
       { title: "Login", icon: "mdi-help-box", to: "/login" },
     ],
-    walletItem: { title: "Wallet", icon: mdiWalletOutline, to: "/wallet" },
     pagesList: [],
     drawer: false,
     icons: {
@@ -104,9 +94,6 @@ export default {
   methods: {
     changePageList() {
       this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
-    },
-    onWalletClick() {
-      console.log("wallet");
     },
   },
   computed: {

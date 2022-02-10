@@ -11,14 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketsAPI.Entities;
-using TicketsAPI.IRepository;
-using TicketsAPI.IServices;
-using TicketsAPI.Repositories;
-using TicketsAPI.Repository;
-using TicketsAPI.Services;
+using BookApi.Entities;
+using BookApi.IRepository;
+using BookApi.IServices;
+using BookApi.Repository;
+using BookApi.Services;
 
-namespace TicketsAPI
+namespace BookApi
 {
     public class Startup
     {
@@ -71,10 +70,8 @@ namespace TicketsAPI
         }
         private void RegisterApplicationServices(IServiceCollection services)
         {
-            services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<ITicketRepository, TicketRepository>();
-            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
