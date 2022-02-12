@@ -3,8 +3,7 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6"> BuyBookApp </v-list-item-title>
-          <v-list-item-subtitle> Buy and dont cry </v-list-item-subtitle>
+          <v-list-item-title class="text-h6"> LibraryApp </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 

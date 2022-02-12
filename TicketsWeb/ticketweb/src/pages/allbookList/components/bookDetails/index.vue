@@ -58,7 +58,7 @@ export default {
     open(item) {
       this.bookName = item.name;
       this.bookCategory = item.category;
-      this.bookAuthor = item.bookAuthor
+      this.bookAuthor = item.author
       this.bookPrice = item.price;
       this.bookDate = item.expirationDate;
       this.dialog = true;

@@ -8,21 +8,16 @@
         height="300px"
       >
         <div class="mainEvent ma-12">
-          <div class="mainEvent--header">Event of the Year</div>
+          <div class="mainEvent--header">Books of the Year 2021</div>
           <div class="mainEvent--text">
-            Znakomity kwartet smyczkowy z jedynym koncertem w Polsce! Kronos
-            Quartet słynie z wirtuozerii, wszechstronności i kreatywnego
-            podejścia do tradycji muzycznej globu.
+            read the summary text of this year's edition of the plebiscite!
           </div>
-          <v-btn class="mt-3" color="success"> Custom Loader </v-btn>
+          <v-btn class="mt-3" color="success"> Discover </v-btn>
         </div>
       </v-img>
     </div>
-    <div class="popularEvents pt-8">Polularne wydarzenia</div>
+    <div class="popularEvents pt-8">Popular Books</div>
     <v-divider inset></v-divider>
-    <div>
-      <div class="popularEvents pt-8">Odkrywaj</div>
-    </div>
   </div>
 </template>
 

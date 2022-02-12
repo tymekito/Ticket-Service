@@ -18,11 +18,6 @@
             v-model="query"
           ></v-text-field>
         </div>
-        <div>
-          <v-btn class="button-base addBookButton" @click="onAddBook()"
-            >Add Book</v-btn
-          >
-        </div>
       </div>
       <v-container class="spinnerConteiner" v-if="books && books.length === 0">
         <v-progress-circular

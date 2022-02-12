@@ -21,7 +21,14 @@
           v-model="name"
           :counter="50"
           :rules="nameRules"
-          label="Name"
+          label="Book Name"
+          required
+        ></v-text-field>        
+        <v-text-field
+          v-model="author"
+          :counter="50"
+          :rules="authorRules"
+          label="Author"
           required
         ></v-text-field>
         <v-select
@@ -31,22 +38,7 @@
           label="Category"
           required
         ></v-select>
-        <v-text-field
-          v-model="date"
-          label="The day of the Book"
-          readonly
-          center
-          @click="openDatePicker"
-        ></v-text-field>
-        <v-row v-if="showDatePicker" justify="center">
-          <v-date-picker v-model="date" no-title scrollable>
-            <v-btn text color="primary" @click="closeDataPicker">
-              Cancel
-            </v-btn>
-            <v-btn text color="primary" @click="selectDate"> OK </v-btn>
-          </v-date-picker>
-        </v-row>
-        <v-row v-else>
+        <v-row>
           <v-btn
             :disabled="!valid"
             color="success"
@@ -74,6 +66,7 @@ export default {
     sendForm: false,
     valid: true,
     name: "",
+    author: "",
     dialog: false,
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -81,6 +74,10 @@ export default {
     nameRules: [
       (v) => !!v || "Name is required",
       (v) => (v && v.length <= 50) || "Name must be less than 50 characters",
+    ],
+    authorRules: [
+      (v) => !!v || "Author name is required",
+      (v) => (v && v.length <= 50) || "Author name must be less than 50 characters",
     ],
     selectedCategory: null,
     categories: null,
@@ -97,7 +94,8 @@ export default {
         const newBook = new AddBookModel(
           this.name,
           this.selectedCategory,
-          this.userDetails.userId,
+          this.author,
+          null,
           this.date,
         );
         await this.addMyBook(newBook).then(

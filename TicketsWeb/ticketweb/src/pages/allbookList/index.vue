@@ -111,6 +111,7 @@ export default {
     async refreshPageData() {
       await this.getBookList();
       this.books = this.bookList;
+      console.log(this.books)
       this.alert = false;
     },
   },
