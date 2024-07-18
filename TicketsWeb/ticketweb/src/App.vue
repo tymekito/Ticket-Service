@@ -11,7 +11,12 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
+        <v-list-item
+          v-for="item in pagesList"
+          :key="item.title"
+          :to="item.to"
+          link
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -22,14 +27,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      app
-      absolute
-      color="#43a047"
-      dark
-      src="https://picsum.photos/1920/1080?random"
-      fade-img-on-scroll
-    >
+    <v-app-bar app absolute color="#43a047" dark>
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
@@ -39,20 +37,11 @@
 
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>Title</v-app-bar-title>
-
+      <!-- <v-app-bar-title>Title</v-app-bar-title> -->
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
+      <v-btn v-if="isLoggedIn" class="mr-10"  text :to="walletItem.to" link>
+        <v-icon>{{ walletItem.icon }}</v-icon>
+        <span class="ml-2">{{ `${userDetails.wallet}$` }}</span>
       </v-btn>
     </v-app-bar>
     <v-sheet
@@ -69,18 +58,64 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mdiWalletOutline } from "@mdi/js";
 export default {
   name: "app",
   componetns: {},
-  data() {
-    return {
-      items: [
-        { title: "Home", icon: "mdi-view-dashboard", to: "/" },
-        { title: "MyTickets", icon: "mdi-image", to: "/tickets" },
-        { title: "Events", icon: "mdi-help-box", to: "events" },
-      ],
-      drawer: false,
-    };
+  data: () => ({
+    loggedItems: [
+      { title: "Home", icon: "mdi-view-dashboard", to: "/" },
+      {
+        title: "MyTickets",
+        icon: "mdi-image",
+        to: "/tickets",
+      },
+      {
+        title: "Events",
+        icon: "mdi-help-box",
+        to: "/events",
+      },
+      {
+        title: "MyEvents",
+        icon: "mdi-help-box",
+        to: "/myEvents",
+      },
+      {
+        title: "Logout",
+        icon: "mdi-help-box",
+        to: "/logout",
+      },
+    ],
+    unLoggedItems: [
+      { title: "Home", icon: "mdi-view-dashboard", to: "/" },
+      { title: "Login", icon: "mdi-help-box", to: "/login" },
+    ],
+    walletItem: { title: "Wallet", icon: mdiWalletOutline, to: "/wallet" },
+    pagesList: [],
+    drawer: false,
+    icons: {
+      mdiWalletOutline,
+    },
+  }),
+  mounted() {
+    this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
+  },
+  methods: {
+    changePageList() {
+      this.pagesList = this.isLoggedIn ? this.loggedItems : this.unLoggedItems;
+    },
+    onWalletClick() {
+      console.log("wallet");
+    },
+  },
+  computed: {
+    ...mapGetters("login", ["isLoggedIn", "userDetails"]),
+  },
+  watch: {
+    isLoggedIn: function () {
+      this.changePageList();
+    },
   },
 };
 </script>
@@ -89,7 +124,11 @@ export default {
 .sticky {
   position: fixed;
   top: 0;
-  width: 100%
-
+  width: 100%;
+}
+.wallet {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 88%;
 }
 </style>

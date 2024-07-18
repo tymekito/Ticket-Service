@@ -23,7 +23,7 @@ namespace TicketsAPI.Services
         }
         public async Task<User> GetById(int id, CancellationToken cancelationToken)
         {
-            var ticketById = await userRepository.GetById(id, cancelationToken);
+            var ticketById = await userRepository.GetById(id);
             return ticketById;
         }
         public async Task AddUser(User user, CancellationToken cancelationToken)
@@ -33,6 +33,10 @@ namespace TicketsAPI.Services
         public async Task<bool> DeleteUser(int id, CancellationToken cancelationToken)
         {
             return await userRepository.DeleteUser(id, cancelationToken);
+        }
+        public async Task AddMoneyToUser(int userId, double amount)
+        {
+            await userRepository.AddMoneyToUser(userId, amount);
         }
     }
 }

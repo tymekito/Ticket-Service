@@ -16,11 +16,11 @@ namespace TicketsAPI.Repositories
         }
         public async Task<IEnumerable<Event>> GetAll(CancellationToken cancelationToken)
         {
-            var tmp =  await dbContext
+            var result =  await dbContext
                 .Events
                 .Include(t => t.Tickets)
                 .ToListAsync(cancelationToken);
-            return tmp;
+            return result;
                 
         }
         public async Task<Event> GetById(int id, CancellationToken cancelationToken)
@@ -30,12 +30,36 @@ namespace TicketsAPI.Repositories
                 .Include(t => t.Tickets)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+        public async Task<IEnumerable<Event>> GetUserEvents(int userId, CancellationToken cancelationToken)
+        {
+            var result = await dbContext
+                .Events
+                .Include(t => t.Tickets)
+                .ToListAsync();
+            return result.FindAll(r => r.OwnerId == userId);
+        }
         public async Task AddEvent(Event _event, CancellationToken cancelationToken)
         {
             await dbContext
                 .Events
                 .AddAsync(_event, cancelationToken);                        
             await dbContext.SaveChangesAsync(cancelationToken);
+        }
+        public async Task<bool> PayForEvent(int userId, double amount, int eventId)
+        {
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var _event = await dbContext.Events.FirstOrDefaultAsync(e => e.Id == eventId);
+            var eventOwner = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == _event.OwnerId);
+            if (user != null && _event != null && eventOwner != null && user.Wallet - amount >= 0)
+            {
+                user.Wallet -= amount;
+                dbContext.Update(user);
+                eventOwner.Wallet += amount;
+                dbContext.Update(eventOwner);
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
         public async Task<bool> DeleteEvent(int id, CancellationToken cancelationToken)
         {

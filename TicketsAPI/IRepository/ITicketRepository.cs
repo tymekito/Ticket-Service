@@ -8,7 +8,7 @@ namespace TicketsAPI.IRepository
     public interface ITicketRepository
     {
         public Task<IEnumerable<Ticket>> GetAll(CancellationToken cancelationToken);
-        public Task<Ticket> GetById(int id, CancellationToken cancelationToken);
+        public Task<List<Ticket>> GetTicketListByUserId(int id, CancellationToken cancelationToken);
         public Task AddTicketWithUserToEvent(Ticket ticket, CancellationToken cancelationToken);
         public Task<bool> DeleteTicket(int id, CancellationToken cancelationToken);
 

@@ -15,9 +15,7 @@ const client = {
       },
     };
     try {
-      console.log(resource)
-
-      const result = await api.get(resource, config);
+     const result = await api.get(resource, config);
       return result;
     } catch (ex) {
       if (handleError) {
@@ -31,6 +29,23 @@ const client = {
     const config = {
       params,
       headers: {
+      },
+    };
+    try {
+      const result = await api.post(resource, data, config);
+      return result;
+    } catch (ex) {
+      if (handleError) {
+        console.log(ex)
+      }
+      throw ex;
+    }
+  },
+  async postFormData(resource, data, params, handleError = true) {
+    const config = {
+      params,
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
     };
     try {

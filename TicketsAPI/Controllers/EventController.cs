@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TicketsAPI.Entities;
 using TicketsAPI.IServices;
+using TicketsAPI.Models;
 
 namespace TicketsAPI.Controllers
 {
@@ -28,11 +29,11 @@ namespace TicketsAPI.Controllers
             var result = _event.ToList().Select(e => mapper.Map<EventViewModel>(e));
             return Ok(result);
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IReadOnlyCollection<Event>>> GetEventById([FromRoute] int id, CancellationToken cancelationToken)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IReadOnlyCollection<Event>>> GetUserEvents([FromRoute] int userId, CancellationToken cancelationToken)
         {
-            var _event = await service.GetById(id, cancelationToken);
-            var result = mapper.Map<EventViewModel>(_event);
+            var _event = await service.GetUserEvents(userId, cancelationToken);
+            var result = _event.ToList().Select(e => mapper.Map<EventViewModel>(e));
             return Ok(result);
         }
         [HttpPost]

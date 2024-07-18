@@ -1,0 +1,15 @@
+.button-base {
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: -0.015em;
+    box-shadow: none;
+}
+.button-remove {
+    background-color: #DA4F46 !important;
+}
+.button-remove.theme--light.v-btn.v-btn--has-bg {
+    color: #DA4F46 !important;
+    background-color: #DA4F46 !important;
+
+}
