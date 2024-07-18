@@ -3,4 +3,4 @@ Event ticket purchase service
 
 Vue2.js + Vuetify 
 
-C# ASP.Net
+C# .Net 5 EFCore
