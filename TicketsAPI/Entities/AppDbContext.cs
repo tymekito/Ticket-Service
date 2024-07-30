@@ -4,7 +4,7 @@ namespace TicketsAPI.Entities
 {
     public class AppDbContext : DbContext
     {
-        private readonly string connectionString = "Server=localhost\\SQLEXPRESS; Database=TicketsDb; Trusted_Connection=True";
+        private readonly string connectionString = "Server=localhost,1433; Database=TicketsDb; User Id=sa; Password=Your_password123;";
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<User> Users { get; set; }

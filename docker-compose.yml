@@ -5,3 +5,34 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+
+  ticketsapi:
+    build:
+      context: .
+      dockerfile: TicketsAPI/Dockerfile
+    ports:
+      - "44365:80"  # Map port 80 in the container to port 44365 on the host
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MyDatabase=Server=sqlserver;Database=TicketsDb;User Id=sa;Password=Your_password123;
+    depends_on:
+      - sqlserver
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "Your_password123"  # Set a strong password here
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - sqlnet
+
+volumes:
+  sqlserver-data:
+
+networks:
+  sqlnet:
